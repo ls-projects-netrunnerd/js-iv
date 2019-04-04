@@ -35,6 +35,20 @@ class Instructor extends Person {
   grade(student, subject) {
     return `${student.name} receives a perfect score on ${subject}.`;
   }
+
+  submitGrade(s) {
+    let n = Math.floor(Math.random() * 25);
+
+    if (n <= 10) {
+      s.grade -= n;
+
+      return `${s.name}'s grade went down ${n} points.`;
+    }
+
+    s.grade += n;
+
+    return `${s.name}'s grade went up ${n} points.`;
+  }
 }
 
 // ProjectManager
@@ -65,6 +79,7 @@ class Student extends Person {
     this.previousBackground = obj.previousBackground;
     this.className = obj.className;
     this.favSubjects = obj.favSubjects;
+    this.grade = obj.grade;
   }
 
   listSubjects() {
@@ -77,6 +92,14 @@ class Student extends Person {
 
   sprintChallenge(subject) {
     return `${this.name} has begun the sprint challenge on ${subject}.`;
+  }
+
+  graduate() {
+    if (this.grade >= 70) {
+      return `Congrats, ${this.name}. You can graduate.`;
+    }
+
+    return `Oof... Try again next time, bud.`;
   }
 }
 
@@ -108,6 +131,7 @@ const projectman = new ProjectManager({
 const student = new Student({
   name: 'Ruby',
   age: 420,
+  grade: 50,
   gender: 'M',
   location: '127.0.0.1',
   className: 'WEBPT5',
@@ -154,3 +178,8 @@ const rollcredits = (o, s) => {
 rollcredits(instructor, student);
 rollcredits(projectman, student);
 rollcredits(student);
+
+console.log(instructor.submitGrade(student));
+console.log(projectman.submitGrade(student));
+console.log(student.graduate());
+
